@@ -7,6 +7,9 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var login = require('./routes/login');
+var group = require('./routes/group');
+var item = require('./routes/item');
+var data = require('./routes/data');
 var http = require('http');
 var path = require('path');
 
@@ -22,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(app.router);
+//app.use('/data', data);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
@@ -31,8 +35,14 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+//app.get('/data', routes.data);
+app.get('/data/users',data.userData);
+app.get('/data/items',data.itemData);
+app.get('/data/groups',data.groupData);
 app.post('/login',login.login);
 app.post('/join',login.join);
+app.post('/addGroup',group.addGroup);
+app.post('/addItem',item.addItem);
 
 /*app.post('/login',function(req,res,next){
   req.id = req.body.id;

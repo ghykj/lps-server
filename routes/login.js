@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var crypto = require("crypto");
+var mysql = require("mysql");
 
 var connection = mysql.createConnection({
   host: 'localhost',
@@ -8,6 +9,14 @@ var connection = mysql.createConnection({
   password: '1104',
   database: 'lps'
 });
+
+/*var connection = mysql.createConnection({
+  host: 'localhost',
+  port: 3306,
+  user: 'root',
+  password: '1104',
+  database: 'lps'
+});*/
 
 //hash key generation for password
 var myHash = function myHash(key){
@@ -80,7 +89,7 @@ exports.join = function(req, res, callback){
    res.json(response);
  });
  delete user;
-};
+}
 
 /*exports.join = function(req, res) {
  var id = req.body.id;
