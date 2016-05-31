@@ -41,6 +41,51 @@ module.exports.addGroup = function(req, res, callback){
  delete group;
 }
 
+module.exports.editGroup = function(req, res, callback){
+  /*var response = {};
+  var USER_ID = req.body.USER_ID;
+  var BEACON_ID = req.body.BEACON_ID;
+  var ITEM_NAME = req.body.ITEM_NAME;
+  var ITEM_LOSS_TIME = moment().format('yyyy-MM-dd HH:mm');
+  var ITEM_ALARM_STATUS = req.body.ITEM_ALARM_STATUS;*/
+
+  var response ={};
+  var group = {
+    "GROUP_NAME" : req.body.GROUP_NAME,
+    "GROUP_ID" : req.body.GROUP_ID,
+    "USER_ID" : req.body.USER_ID
+  }
+  connection.query("UPDATE groupinfo SET GROUP_NAME = ? where GROUP_ID = ? and USER_ID = ?", [group.GROUP_NAME, group.GROUP_ID, group.USER_ID], function(error, result){
+
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "edit group ok";
+   }
+   res.json(response);
+  });
+}
+
+module.exports.deleteGroup = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM groupinfo WHERE USER_ID = ? and GROUP_ID = ?",[req.params.id, req.params.groupID], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete group ok";
+   }
+   res.json(response);
+  });
+}
+
 /*module.exports.getGroupByID = function(id, callback){
     var response = {};
     function(connection, callback){

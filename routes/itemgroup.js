@@ -18,27 +18,44 @@ module.exports.addItemGroup = function(req, res, callback){
   var USER_ID = req.body.USER_ID;
 
 
-  var group = {
-    "GROUP_NAME" : GROUP_NAME,
+  var itemgroup = {
+    "ITEM_GROUP_ID" : ITEM_GROUP_ID,
+    "BEACON_ID" : BEACON_ID,
     "GROUP_ID" : GROUP_ID,
     "USER_ID" : USER_ID
   }
 
-  connection.query("INSERT INTO groupinfo SET ?",item, function(error, result) {
+  connection.query("INSERT INTO itemgroup SET ?",itemgroup, function(error, result) {
 
    if (error) {
     console.log("err", error);
     response.code = 400;
     response.data = "fail";
     if(error.errno == 1062){
-      response.data = "duplicate-group";
+      response.data = "duplicate-itemgroup";
     }
    }
    else {
     console.log("result", result);
-    response.data = "add group ok";
+    response.data = "add itemgroup ok";
    }
    res.json(response);
  });
- delete group;
+ delete itemgroup;
+}
+
+module.exports.deleteItemGroup = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM itemgroup WHERE USER_ID = ? and ITEM_GROUP_ID = ?",[req.params.id, req.params.itemGroupID], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete itemgroup ok";
+   }
+   res.json(response);
+  });
 }

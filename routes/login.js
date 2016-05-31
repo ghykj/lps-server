@@ -57,11 +57,6 @@ exports.login = function(req, res, callback){
 
 exports.join = function(req, res, callback){
   var response = {};
-  /*var newUser = new User();
-  newUser.id = req.body.id;
-  newUser.name = req.body.name;
-  newUser.password = myHash(req.body.password);
-  */
   var id = req.body.id;
   var name = req.body.name;
   var password = myHash(req.body.password);
@@ -91,30 +86,19 @@ exports.join = function(req, res, callback){
  delete user;
 }
 
-/*exports.join = function(req, res) {
- var id = req.body.id;
- var name = req.body.name;
- var password = myHash(req.body.password);
 
- // DB에 해당 정보 insert
- var member = {
-  "id" : id,
-  "name" : name,
-  "password" : pssword,
- };
-
- connection.query("INSERT INTO user SET ?",user, function(error, result) {
-  if (error) {
-   console.log("err", error);
-   res.json({
-    result : 'fail'
-   });
-  } else {
-   console.log("result", result);
-   res.json({
-    result : 'success'
-   });
-  }
- });
-};
-*/
+module.exports.deleteUser = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM user WHERE id = ?",[req.params.id], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete user ok";
+   }
+   res.json(response);
+  });
+}

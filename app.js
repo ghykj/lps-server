@@ -9,6 +9,7 @@ var user = require('./routes/user');
 var login = require('./routes/login');
 var group = require('./routes/group');
 var item = require('./routes/item');
+var itemgroup = require('./routes/itemgroup');
 var data = require('./routes/data');
 var http = require('http');
 var path = require('path');
@@ -33,16 +34,30 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+//main
 app.get('/', routes.index);
 app.get('/users', user.list);
-//app.get('/data', routes.data);
+//data
 app.get('/data/users',data.userData);
 app.get('/data/items',data.itemData);
 app.get('/data/groups',data.groupData);
+app.get('/data/itemgroups',data.itemGroupData)
+//user관련
 app.post('/login',login.login);
 app.post('/join',login.join);
-app.post('/addGroup',group.addGroup);
+app.delete('/deleteUser/:id',login.deleteUser);
+//item관련
 app.post('/addItem',item.addItem);
+app.post('/editItem',item.editItem);
+app.post('/lossTime',item.lossTime);
+app.delete('/deleteItem/:id/:beaconID',item.deleteItem);
+//group관련
+app.post('/addGroup',group.addGroup);
+app.post('/editGroup',group.editGroup);
+app.delete('/deleteGroup/:id/:groupID',group.deleteGroup);
+//itemgroup관련
+app.post('/addItemGroup',itemgroup.addItemGroup);
+app.delete('/deleteItemGroup/:id/:itemGroupID',itemgroup.deleteItemGroup);
 
 /*app.post('/login',function(req,res,next){
   req.id = req.body.id;

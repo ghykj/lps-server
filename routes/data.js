@@ -68,4 +68,23 @@ module.exports.groupData = function(req, res) {
   });
 }
 
+module.exports.itemGroupData = function(req, res) {
+  async.waterfall([
+    function(callback){
+      callback(null, connection);
+    },
+    function(connection, callback){
+      connection.query("SELECT * FROM itemgroup", function(query_error, query_result){
+        if(query_error){
+          console.log("query error : " + query_error);
+        }
+        callback(JSON.parse(JSON.stringify(query_error)), query_result);
+      });
+    }
+  ], function(err, result){
+	res.header("Content-Type", "application/json; charset=utf-8");
+    res.json(result);
+  });
+}
+
 //module.exports = router;
