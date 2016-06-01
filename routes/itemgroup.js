@@ -59,3 +59,20 @@ module.exports.deleteItemGroup = function(req, res, callback){
    res.json(response);
   });
 }
+
+module.exports.getItemGroup = function(req, res, callback){
+  var response = {};
+  //var id = req.params.id; //요청자의 id
+  connection.query("SELECT ITEM_GROUP_ID, BEACON_ID, GROUP_ID FROM itemgroup WHERE USER_ID = ?",[req.params.id], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = result;
+   }
+   res.json(response);
+  });
+}

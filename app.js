@@ -51,13 +51,16 @@ app.post('/addItem',item.addItem);
 app.post('/editItem',item.editItem);
 app.post('/lossTime',item.lossTime);
 app.delete('/deleteItem/:id/:beaconID',item.deleteItem);
+app.get('/getItem/:id',item.getItem);
 //group관련
 app.post('/addGroup',group.addGroup);
 app.post('/editGroup',group.editGroup);
 app.delete('/deleteGroup/:id/:groupID',group.deleteGroup);
+app.get('/getGroup/:id',group.getGroup);
 //itemgroup관련
 app.post('/addItemGroup',itemgroup.addItemGroup);
 app.delete('/deleteItemGroup/:id/:itemGroupID',itemgroup.deleteItemGroup);
+app.get('/getItemGroup/:id',itemgroup.getItemGroup);
 
 /*app.post('/login',function(req,res,next){
   req.id = req.body.id;

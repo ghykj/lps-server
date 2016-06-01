@@ -23,7 +23,8 @@ module.exports.addItem = function(req, res, callback){
     "ITEM_NAME" : ITEM_NAME,
     "ITEM_LOSS_TIME" : ITEM_LOSS_TIME,
     "ITEM_ALARM_STATUS" : ITEM_ALARM_STATUS,
-    "USER_ID" : USER_ID
+    "USER_ID" : USER_ID,
+    "ITEM_LOCK" : req.body.ITEM_LOCK
   }
 
   connection.query("INSERT INTO iteminfo SET ?",item, function(error, result) {
@@ -53,7 +54,8 @@ module.exports.lossTime = function(req, res, callback){
     "ITEM_NAME" : req.body.ITEM_NAME,
     "ITEM_LOSS_TIME" : moment().format('YYYY-MM-DD HH:mm'),
     "ITEM_ALARM_STATUS" : req.body.ITEM_ALARM_STATUS,
-    "USER_ID" : req.body.USER_ID
+    "USER_ID" : req.body.USER_ID,
+    "ITEM_LOCK" : req.body.ITEM_LOCK
   }
   connection.query("UPDATE iteminfo SET ITEM_LOSS_TIME = ? where BEACON_ID = ? and USER_ID = ?", [item.ITEM_LOSS_TIME, item.BEACON_ID, item.USER_ID], function(error, result){
 
@@ -78,9 +80,10 @@ module.exports.editItem = function(req, res, callback){
     "ITEM_NAME" : req.body.ITEM_NAME,
     "ITEM_LOSS_TIME" : req.body.ITEM_LOSS_TIME,
     "ITEM_ALARM_STATUS" : req.body.ITEM_ALARM_STATUS,
-    "USER_ID" : req.body.USER_ID
+    "USER_ID" : req.body.USER_ID,
+    "ITEM_LOCK" : req.body.ITEM_LOCK
   }
-  connection.query("UPDATE iteminfo SET ITEM_NAME = ?, ITEM_ALARM_STATUS = ? where BEACON_ID = ? and USER_ID = ?", [item.ITEM_NAME, item.ITEM_ALARM_STATUS, item.BEACON_ID, item.USER_ID], function(error, result){
+  connection.query("UPDATE iteminfo SET ITEM_NAME = ?, ITEM_ALARM_STATUS = ?, ITEM_LOCK = ? where BEACON_ID = ? and USER_ID = ?", [item.ITEM_NAME, item.ITEM_ALARM_STATUS, item.ITEM_LOCK, item.BEACON_ID, item.USER_ID], function(error, result){
 
     if (error) {
      console.log("err", error);
@@ -106,6 +109,24 @@ module.exports.deleteItem = function(req, res, callback){
    else {
      console.log("result",result);
      response.data = "delete item ok";
+   }
+   res.json(response);
+  });
+}
+
+
+module.exports.getItem = function(req, res, callback){
+  var response = {};
+  //var id = req.params.id; //요청자의 id
+  connection.query("SELECT BEACON_ID, ITEM_NAME, ITEM_LOSS_TIME, ITEM_ALARM_STATUS, ITEM_LOCK FROM iteminfo WHERE USER_ID = ?",[req.params.id], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = result;
    }
    res.json(response);
   });
