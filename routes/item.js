@@ -15,7 +15,7 @@ module.exports.addItem = function(req, res, callback){
   var USER_ID = req.body.USER_ID;
   var BEACON_ID = req.body.BEACON_ID;
   var ITEM_NAME = req.body.ITEM_NAME;
-  var ITEM_LOSS_TIME = moment().format('YYYY-MM-DD HH:mm');
+  var ITEM_LOSS_TIME = req.body.ITEM_LOSS_TIME;
   var ITEM_ALARM_STATUS = req.body.ITEM_ALARM_STATUS;
 
   var item = {
@@ -52,7 +52,7 @@ module.exports.lossTime = function(req, res, callback){
   var item = {
     "BEACON_ID" : req.body.BEACON_ID,
     "ITEM_NAME" : req.body.ITEM_NAME,
-    "ITEM_LOSS_TIME" : moment().format('YYYY-MM-DD HH:mm'),
+    "ITEM_LOSS_TIME" : req.body.ITEM_LOSS_TIME,
     "ITEM_ALARM_STATUS" : req.body.ITEM_ALARM_STATUS,
     "USER_ID" : req.body.USER_ID,
     "ITEM_LOCK" : req.body.ITEM_LOCK

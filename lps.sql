@@ -42,4 +42,3 @@ CREATE TABLE `user` (
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
-ak

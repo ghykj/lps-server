@@ -60,6 +60,8 @@ app.get('/getGroup/:id',group.getGroup);
 //itemgroup관련
 app.post('/addItemGroup',itemgroup.addItemGroup);
 app.delete('/deleteItemGroup/:id/:itemGroupID',itemgroup.deleteItemGroup);
+app.delete('/allItemdeleteItemGroup/:id/:beaconID',itemgroup.allItemdeleteItemGroup);
+app.delete('/allGroupDeleteItemGroup/:id/:groupID',itemgroup.allGroupDeleteItemGroup);
 app.get('/getItemGroup/:id',itemgroup.getItemGroup);
 
 /*app.post('/login',function(req,res,next){

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 var mysql = require("mysql");
+var url = require("url");
 
 var connection = mysql.createConnection({
   host: 'localhost',

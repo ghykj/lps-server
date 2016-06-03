@@ -60,6 +60,38 @@ module.exports.deleteItemGroup = function(req, res, callback){
   });
 }
 
+odule.exports.allItemdeleteItemGroup = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM itemgroup WHERE USER_ID = ? and BEACON_ID = ?",[req.params.id, req.params.beaconID], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete itemgroup ok";
+   }
+   res.json(response);
+  });
+}
+
+module.exports.allGroupDeleteItemGroup = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM itemgroup WHERE USER_ID = ? and GROUP_ID = ?",[req.params.id, req.params.groupID], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete itemgroup ok";
+   }
+   res.json(response);
+  });
+}
+
 module.exports.getItemGroup = function(req, res, callback){
   var response = {};
   //var id = req.params.id; //요청자의 id
