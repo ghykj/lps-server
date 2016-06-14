@@ -72,6 +72,7 @@ module.exports.lossTime = function(req, res, callback){
   });
 }
 
+
 module.exports.editItem = function(req, res, callback){
 
   var response ={};
@@ -114,9 +115,33 @@ module.exports.deleteItem = function(req, res, callback){
   });
 }
 
+module.exports.deleteAllItem = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM iteminfo WHERE USER_ID = ?",[req.params.id], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete item ok";
+   }
+   res.json(response);
+  });
+}
+
 
 module.exports.getItem = function(req, res, callback){
   var response = {};
+  var item = {
+    "BEACON_ID" : req.body.BEACON_ID,
+    "ITEM_NAME" : req.body.ITEM_NAME,
+    "ITEM_LOSS_TIME" : req.body.ITEM_LOSS_TIME,
+    "ITEM_ALARM_STATUS" : req.body.ITEM_ALARM_STATUS,
+    "USER_ID" : req.body.USER_ID,
+    "ITEM_LOCK" : req.body.ITEM_LOCK
+  }
   //var id = req.params.id; //요청자의 id
   connection.query("SELECT BEACON_ID, ITEM_NAME, ITEM_LOSS_TIME, ITEM_ALARM_STATUS, ITEM_LOCK FROM iteminfo WHERE USER_ID = ?",[req.params.id], function(error, result){
     if (error) {

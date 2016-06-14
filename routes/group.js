@@ -86,6 +86,22 @@ module.exports.deleteGroup = function(req, res, callback){
   });
 }
 
+module.exports.deleteAllGroup = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM groupinfo WHERE USER_ID = ?",[req.params.id], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete item ok";
+   }
+   res.json(response);
+  });
+}
+
 module.exports.getGroup = function(req, res, callback){
   var response = {};
   //var id = req.params.id; //요청자의 id

@@ -64,6 +64,10 @@ app.delete('/allItemdeleteItemGroup/:id/:beaconID',itemgroup.allItemdeleteItemGr
 app.delete('/allGroupDeleteItemGroup/:id/:groupID',itemgroup.allGroupDeleteItemGroup);
 app.get('/getItemGroup/:id',itemgroup.getItemGroup);
 
+app.delete('/deleteAllGroup/:id',group.deleteAllGroup);
+app.delete('/deleteAllItem/:id',item.deleteAllItem);
+app.delete('/deleteAllItemGroup/:id',itemgroup.deleteAllItemGroup);
+
 /*app.post('/login',function(req,res,next){
   req.id = req.body.id;
   req.password = myHash(req.body.password);

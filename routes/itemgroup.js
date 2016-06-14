@@ -60,7 +60,7 @@ module.exports.deleteItemGroup = function(req, res, callback){
   });
 }
 
-odule.exports.allItemdeleteItemGroup = function(req, res, callback){
+module.exports.allItemdeleteItemGroup = function(req, res, callback){
   var response ={};
   connection.query("DELETE FROM itemgroup WHERE USER_ID = ? and BEACON_ID = ?",[req.params.id, req.params.beaconID], function(error, result){
     if (error) {
@@ -104,6 +104,22 @@ module.exports.getItemGroup = function(req, res, callback){
    else {
      console.log("result",result);
      response.data = result;
+   }
+   res.json(response);
+  });
+}
+
+module.exports.deleteAllItemGroup = function(req, res, callback){
+  var response ={};
+  connection.query("DELETE FROM itemgroup WHERE USER_ID = ?",[req.params.id], function(error, result){
+    if (error) {
+     console.log("err", error);
+     response.code = 400;
+     response.data = "fail";
+   }
+   else {
+     console.log("result",result);
+     response.data = "delete item ok";
    }
    res.json(response);
   });
